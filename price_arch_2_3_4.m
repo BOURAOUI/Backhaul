@@ -39,6 +39,7 @@ Price_ONU=105;                        %Price of the ONU
 Price_OLT=1750;                       %Price of the OLT
 
 %Architecture Microwave only
+<<<<<<< HEAD
 % figure 
 % 
 % for mu=0:0.2:0.6
@@ -66,6 +67,35 @@ Price_OLT=1750;                       %Price of the OLT
 %         hold on
 %     end
 % end
+=======
+figure 
+
+for mu=0:0.2:0.6
+    if mu==0
+        N_macro=(ro*A*alpha_max)./N_active_macro; 
+        N_hub=(N_macro)./n_MW; 
+        N_ul=A_g_tot/U_max;
+        N_MW=A_g_tot/C_MW;
+        P_arch2=N_macro*(Price_antenna_macro)+N_hub*Price_Hub +N_ul*Price_SFP_;
+        P2=(P_arch2+N_macro*(Price_antenna_macro))/A;
+        plot(r,P2)
+        hold on
+    else
+        N_femto = N_a*mu;
+        P_GES=(N_femto.*Price_GES)./(N_b*n_GES);
+        N_macro=(ro*A*(1-mu)*alpha_max)./N_active_macro; 
+        N_Dslam= N_femto./n_Dslam_ports;  
+        N_s= (N_Dslam+N_macro)./n_F_ports;
+        N_hub=(N_b+N_macro)./n_MW; 
+        N_ul=max(N_hub,A_g_tot/U_max);
+        N_MW=N_hub;
+        P_arch2=(N_b+N_macro)*Price_antenna_macro+N_b*Price_GES+N_hub*Price_Hub+N_ul*Price_SFP_;
+        P2=(N_femto*Price_femto+N_macro*Price_antenna_macro+P_arch2)/A;
+        plot(r,P2)
+        hold on
+    end
+end
+>>>>>>> parent of 5ee6b09... Revert "Projet S5 : Backhaul"
 
 %Architecture FTTB+Microwave
 figure 
@@ -85,9 +115,15 @@ for mu=0:0.2:0.6
             N_macro=(ro*A*(1-mu)*alpha_max)./N_active_macro; 
             N_Dslam= N_femto./n_Dslam_ports;  
             N_s= N_b./n_F_ports; 
+<<<<<<< HEAD
             N_hub=(N_macro)/n_MW;
             
             N_ul=max(N_hub+N_s,A_g_tot/U_max);
+=======
+            N_hub=(N_macro)./n_MW; 
+            N_ul=max(N_hub+N_s,A_g_tot/U_max);
+            N_MW=N_hub;
+>>>>>>> parent of 5ee6b09... Revert "Projet S5 : Backhaul"
             P_arch3= N_b*(Price_GES+2*Price_SFP)+N_macro*(Price_antenna_macro+Price_spec)+N_s*Price_s+N_hub*(Price_Hub)+N_ul*Price_SFP_; 
             P3=(P_arch3+Price_fibre)/A;
             plot(r,P3)
@@ -109,6 +145,10 @@ for mu=0:0.2:0.6
         hold on
     else
         N_femto = N_a*mu;
+<<<<<<< HEAD
+=======
+        %N_GES=(N_femto./12)./N_b;
+>>>>>>> parent of 5ee6b09... Revert "Projet S5 : Backhaul"
         N_macro=(ro*A*(1-mu)*alpha_max)./N_active_macro; 
         N_split=floor((N_b+N_macro)./N_port_split)+1;                        %nombre de splitter   
         N_s= floor(N_split/n_F_ports)+1; 
